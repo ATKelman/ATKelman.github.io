@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Alexander Kelman Portfolio</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/1-col-portfolio.css" rel="stylesheet">
+
+    <!-- Temporary navbar container fix -->
+    <style>
+    .navbar-toggler {
+        z-index: 1;
+    }
+    
+    @media (max-width: 576px) {
+        nav > .container {
+            width: 100%;
+        }
+    }
+	
+	table {
+		text-align: center;
+	}
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-inverse">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="container">
+            <a class="navbar-brand" href="http://atkelman.github.io">Alexander Kelman</a>
+            <div class="collapse navbar-collapse" id="navbarExample">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+					<li class="nav-item">
+                        <a class="nav-link" href="hobby.html">Hobby Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Page Heading -->
+        <h1 class="my-4">Bachelor Degree Project</h1>
+		
+		<h5 class="my-4">Bachelor Degree Project in Computer Science with a Specialization in Computer Game Development. 
+				The project is based on the research of utilizing the Swarm Intelligence algorithms, Ant Colony Optimization 
+				and Particle Swarm Optimization, for pathfinding in games. </h5>
+		
+		<!-- my attemp -->
+		<div class="row">
+			<!-- Table Col -->
+			<div class="col-md-3" style="padding-top:48px">
+				<table style="width:100%" border="1px" >
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor.html">Ant Colony Optimization</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_pso.html">Particle Swarm Optimization</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_astar.html">A*</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_seeker.html">Seeker Behaviour</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_target.html">Target Behaviour</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_grid.html">Grid Generator</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_node.html">Node</a></th></tr>
+				</table>
+			
+			</div>
+			<!-- Code Col -->
+			<div class="col-md-5">
+				<div class="row">
+					<h3 style="padding-left:15px"> Ant Colony Optimization</h3>
+					
+					<div class="code">
+					<span class="Namespace">using</span>&nbsp;UnityEngine;<br />
+					<span class="Namespace">using</span>&nbsp;System.Collections;<br />
+					<span class="Namespace">using</span>&nbsp;System.Collections.Generic;<br />
+					<span class="Namespace">using</span>&nbsp;System.Diagnostics;<br />
+					<br />
+					<span class="Modifier">public</span>&nbsp;<span class="ReferenceType">class</span>&nbsp;ACO&nbsp;:&nbsp;MonoBehaviour<br />
+					{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;Transform&nbsp;seeker,&nbsp;target;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;GameObject&nbsp;gridManager;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">int</span>&nbsp;NumberOfAnts&nbsp;=&nbsp;1;<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">private</span>&nbsp;<span class="ValueType">float</span>&nbsp;Fgb&nbsp;=&nbsp;0f;<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;[Range(0,1)]<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">float</span>&nbsp;alpha&nbsp;=&nbsp;1.0f;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;[Range(0,&nbsp;1)]<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">float</span>&nbsp;beta&nbsp;=&nbsp;1.0f;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;[Range(0,&nbsp;1)]<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">float</span>&nbsp;q0&nbsp;=&nbsp;0.1f;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;[Range(0,&nbsp;1)]<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">float</span>&nbsp;pheromoneDecay&nbsp;=&nbsp;0.1f;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">bool</span>&nbsp;shouldPrintTime&nbsp;=&nbsp;<span class="Keyword">false</span>;<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">int</span>&nbsp;epochCount&nbsp;=&nbsp;1;<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;MapGridGenerator&nbsp;grid;<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;Stopwatch&nbsp;timer;<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//private&nbsp;List&lt;float&gt;&nbsp;timings;</span><br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">void</span>&nbsp;Awake()<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grid&nbsp;=&nbsp;gridManager.GetComponent&lt;MapGridGenerator&gt;();<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timer&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;Stopwatch();<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//timings&nbsp;=&nbsp;new&nbsp;List&lt;float&gt;();</span><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;List&lt;Node&gt;&nbsp;FindPath(List&lt;Node&gt;&nbsp;alreadyTravelled)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timer.Reset();<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timer.Start();<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Node&nbsp;startNode&nbsp;=&nbsp;grid.NodeFromWorldPoint(seeker.position);<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Node&nbsp;targetNode&nbsp;=&nbsp;grid.NodeFromWorldPoint(target.position);<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&lt;Ant&gt;&nbsp;incompletePaths&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;List&lt;Ant&gt;();<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&lt;Ant&gt;&nbsp;completeAnts&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;List&lt;Ant&gt;();<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;Create&nbsp;ants</span><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&lt;Ant&gt;&nbsp;ants&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;List&lt;Ant&gt;();<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">for</span>&nbsp;(<span class="ValueType">int</span>&nbsp;ant&nbsp;=&nbsp;0;&nbsp;ant&nbsp;&lt;&nbsp;NumberOfAnts;&nbsp;ant++)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ant&nbsp;currentAnt&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;Ant();<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ants.Add(currentAnt);<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;While&nbsp;criteria&nbsp;not&nbsp;met</span><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">for</span>&nbsp;(<span class="ValueType">int</span>&nbsp;epoch&nbsp;=&nbsp;0;&nbsp;epoch&nbsp;&lt;&nbsp;epochCount;&nbsp;epoch++)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;Position&nbsp;at&nbsp;start</span><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">foreach</span>&nbsp;(Ant&nbsp;a&nbsp;<span class="Statement">in</span>&nbsp;ants)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.ClearAnt(seeker.position,&nbsp;startNode.gridX,&nbsp;startNode.gridY,&nbsp;startNode,&nbsp;startNode);<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;incompletePaths.Add(a);<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.reachedTarget&nbsp;=&nbsp;<span class="Keyword">false</span>;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.path.Add(startNode);<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;While&nbsp;each&nbsp;ant&nbsp;has&nbsp;yet&nbsp;to&nbsp;compelte&nbsp;a&nbsp;path</span><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">while</span>&nbsp;(incompletePaths.Count&nbsp;&gt;&nbsp;0)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">foreach</span>(Ant&nbsp;a&nbsp;<span class="Statement">in</span>&nbsp;incompletePaths)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;Choose&nbsp;next&nbsp;position&nbsp;</span><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.previousNode&nbsp;=&nbsp;a.currentNode;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Node&nbsp;temp&nbsp;=&nbsp;ChooseNextNode(a.previousNode,&nbsp;targetNode,&nbsp;a,&nbsp;alreadyTravelled);<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(temp&nbsp;==&nbsp;<span class="Keyword">null</span>)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.fitness&nbsp;=&nbsp;<span class="ValueType">float</span>.MaxValue;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.pathCompelte&nbsp;=&nbsp;<span class="Keyword">true</span>;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;completeAnts.Add(a);<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">continue</span>;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.currentNode&nbsp;=&nbsp;temp;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.fitness&nbsp;+=&nbsp;GetDistance(a.previousNode,&nbsp;a.currentNode);<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.path.Add(a.currentNode);<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>(a.currentNode&nbsp;==&nbsp;targetNode)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.pathCompelte&nbsp;=&nbsp;<span class="Keyword">true</span>;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.fitness&nbsp;*=&nbsp;0.5f;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;completeAnts.Add(a);<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;Apply&nbsp;step&nbsp;by&nbsp;step&nbsp;pheromone&nbsp;update</span><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LocateUpdate(a.currentNode);<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;Remove&nbsp;complete&nbsp;ants&nbsp;from&nbsp;incompetePaths</span><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>(completeAnts.Count&nbsp;&gt;&nbsp;0)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">foreach</span>&nbsp;(Ant&nbsp;cAnt&nbsp;<span class="Statement">in</span>&nbsp;completeAnts)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;incompletePaths.Remove(cAnt);<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;completeAnts.Clear();<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;Apply&nbsp;offline&nbsp;pheromone&nbsp;update</span><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ant&nbsp;bestAnt&nbsp;=&nbsp;<span class="Keyword">null</span>;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">foreach</span>&nbsp;(Ant&nbsp;a&nbsp;<span class="Statement">in</span>&nbsp;ants)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(bestAnt&nbsp;==&nbsp;<span class="Keyword">null</span>&nbsp;||&nbsp;a.fitness&nbsp;&lt;&nbsp;bestAnt.fitness)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bestAnt&nbsp;=&nbsp;a;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fgb&nbsp;=&nbsp;bestAnt.fitness;<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">foreach</span>&nbsp;(Node&nbsp;n&nbsp;<span class="Statement">in</span>&nbsp;bestAnt.path)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GlobalUpdate(n);<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timer.Stop();<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//timings.Add(timer.ElapsedMilliseconds);</span><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>(shouldPrintTime)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(timer.Elapsed);<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ant&nbsp;bestPath&nbsp;=&nbsp;<span class="Keyword">null</span>;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">foreach</span>&nbsp;(Ant&nbsp;a&nbsp;<span class="Statement">in</span>&nbsp;ants)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(bestPath&nbsp;==&nbsp;<span class="Keyword">null</span>&nbsp;||&nbsp;a.fitness&nbsp;&lt;&nbsp;bestPath.fitness)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bestPath&nbsp;=&nbsp;a;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ants.Clear();<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;incompletePaths.Clear();<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;completeAnts.Clear();<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>&nbsp;bestPath.path;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;Node&nbsp;ChooseNextNode(Node&nbsp;currentNode,&nbsp;Node&nbsp;targetNode,&nbsp;Ant&nbsp;a,&nbsp;List&lt;Node&gt;&nbsp;travelled)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Node&nbsp;mostAttractive&nbsp;=&nbsp;<span class="Keyword">null</span>;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">float</span>&nbsp;maxPheromone&nbsp;=&nbsp;0;<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">foreach</span>(Node&nbsp;neighbour&nbsp;<span class="Statement">in</span>&nbsp;grid.GetNeighbours(currentNode))<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(<span class="Keyword">null</span>&nbsp;==&nbsp;neighbour)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">continue</span>;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(!neighbour.walkable&nbsp;||&nbsp;a.path.Contains(neighbour))<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">continue</span>;<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(neighbour&nbsp;==&nbsp;targetNode)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mostAttractive&nbsp;=&nbsp;neighbour;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">break</span>;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(neighbour.pheromone&nbsp;&gt;&nbsp;maxPheromone)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxPheromone&nbsp;=&nbsp;neighbour.pheromone;<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">float</span>&nbsp;dist&nbsp;&nbsp;=&nbsp;GetDistance(neighbour,&nbsp;targetNode);<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">float</span>&nbsp;nIJ&nbsp;&nbsp;&nbsp;=&nbsp;1&nbsp;/&nbsp;dist;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">float</span>&nbsp;tIJ&nbsp;&nbsp;&nbsp;=&nbsp;neighbour.pheromone;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">float</span>&nbsp;tImax&nbsp;=&nbsp;tIJ&nbsp;/&nbsp;maxPheromone;<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;attractiveness&nbsp;==&nbsp;q</span><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">float</span>&nbsp;attractiveness&nbsp;=&nbsp;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mathf.Pow(nIJ,&nbsp;beta)&nbsp;*&nbsp;Mathf.Pow(tImax,&nbsp;alpha);<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;Exploration&nbsp;vs&nbsp;Explotation</span><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(mostAttractive&nbsp;==&nbsp;<span class="Keyword">null</span>&nbsp;||&nbsp;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(mostAttractive.attractiveness&nbsp;&lt;&nbsp;attractiveness&nbsp;&amp;&amp;&nbsp;attractiveness&nbsp;&gt;&nbsp;q0))<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mostAttractive&nbsp;=&nbsp;neighbour;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mostAttractive.attractiveness&nbsp;=&nbsp;attractiveness;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">else</span>&nbsp;<span class="Statement">if</span>(attractiveness&nbsp;&lt;&nbsp;q0&nbsp;&amp;&amp;&nbsp;mostAttractive.attractiveness&nbsp;&lt;&nbsp;attractiveness)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mostAttractive&nbsp;=&nbsp;grid.GetRandomNeighbour(currentNode);<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mostAttractive.attractiveness&nbsp;=&nbsp;attractiveness;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>&nbsp;mostAttractive;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">float</span>&nbsp;GetDistance(Node&nbsp;nodeA,&nbsp;Node&nbsp;nodeB)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>(nodeA&nbsp;==&nbsp;<span class="Keyword">null</span>&nbsp;||&nbsp;nodeB&nbsp;==&nbsp;<span class="Keyword">null</span>)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>&nbsp;<span class="ValueType">float</span>.MaxValue;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;distX&nbsp;=&nbsp;Mathf.Abs(nodeA.gridX&nbsp;-&nbsp;nodeB.gridX);<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;distY&nbsp;=&nbsp;Mathf.Abs(nodeA.gridY&nbsp;-&nbsp;nodeB.gridY);<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(distX&nbsp;&gt;&nbsp;distY)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>&nbsp;1.4f&nbsp;*&nbsp;distY&nbsp;+&nbsp;1.0f&nbsp;*&nbsp;(distX&nbsp;-&nbsp;distY);<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>&nbsp;1.4f&nbsp;*&nbsp;distX&nbsp;+&nbsp;1.0f&nbsp;*&nbsp;(distY&nbsp;-&nbsp;distX);<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">void</span>&nbsp;LocateUpdate(Node&nbsp;node)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(node&nbsp;==&nbsp;<span class="Keyword">null</span>)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;tij&nbsp;=&nbsp;(1&nbsp;-&nbsp;decay)&nbsp;*&nbsp;tij&nbsp;+&nbsp;decay&nbsp;*&nbsp;initial&nbsp;</span><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">float</span>&nbsp;newPheromone&nbsp;=&nbsp;1&nbsp;-&nbsp;pheromoneDecay;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;newPheromone&nbsp;*=&nbsp;node.pheromone;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">float</span>&nbsp;initialStep&nbsp;=&nbsp;node.initialPhermone&nbsp;*&nbsp;pheromoneDecay;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">float</span>&nbsp;pheromoneUpdate&nbsp;=&nbsp;newPheromone&nbsp;+&nbsp;initialStep;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;node.pheromone&nbsp;=&nbsp;pheromoneUpdate;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">void</span>&nbsp;GlobalUpdate(Node&nbsp;node)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(node&nbsp;==&nbsp;<span class="Keyword">null</span>)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;tij&nbsp;=&nbsp;(1&nbsp;-&nbsp;decay)&nbsp;*&nbsp;tij&nbsp;+&nbsp;decay&nbsp;*&nbsp;delta&nbsp;tij</span><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;delta&nbsp;tij&nbsp;=&nbsp;1&nbsp;/&nbsp;Fgb,&nbsp;Fgb&nbsp;=&nbsp;fitness&nbsp;value</span><br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">float</span>&nbsp;pheromoneUpdate&nbsp;&nbsp;=&nbsp;((1&nbsp;-&nbsp;pheromoneDecay)&nbsp;*&nbsp;node.pheromone)&nbsp;+&nbsp;(pheromoneDecay&nbsp;*&nbsp;(1&nbsp;/&nbsp;Fgb));<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;node.pheromone&nbsp;+=&nbsp;pheromoneUpdate;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="ReferenceType">class</span>&nbsp;Ant<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;Vector3&nbsp;worldPosition;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">int</span>&nbsp;gridX;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">int</span>&nbsp;gridY;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;List&lt;Node&gt;&nbsp;path;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;Node&nbsp;previousNode&nbsp;=&nbsp;<span class="Keyword">null</span>;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;Node&nbsp;currentNode&nbsp;=&nbsp;<span class="Keyword">null</span>;<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">float</span>&nbsp;fitness;<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">bool</span>&nbsp;pathCompelte&nbsp;=&nbsp;<span class="Keyword">false</span>;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">bool</span>&nbsp;reachedTarget&nbsp;=&nbsp;<span class="Keyword">false</span>;<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;Ant()<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;List&lt;Node&gt;();<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fitness&nbsp;=&nbsp;0f;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">void</span>&nbsp;ClearAnt(Vector3&nbsp;pos,&nbsp;<span class="ValueType">int</span>&nbsp;x,&nbsp;<span class="ValueType">int</span>&nbsp;y,&nbsp;Node&nbsp;start,&nbsp;Node&nbsp;prev)<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;worldPosition&nbsp;=&nbsp;pos;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gridX&nbsp;=&nbsp;x;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gridY&nbsp;=&nbsp;y;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path.Clear();<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pathCompelte&nbsp;=&nbsp;<span class="Keyword">false</span>;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;currentNode&nbsp;=&nbsp;start;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previousNode&nbsp;=&nbsp;prev;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fitness&nbsp;=&nbsp;0f;<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					}
+					</div>					
+				</div>
+			</div>
+		</div>
+	
+        <hr>
+
+        <hr>
+
+    </div>
+    <!-- /.container -->
+
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/tether/tether.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

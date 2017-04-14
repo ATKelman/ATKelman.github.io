@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Alexander Kelman Portfolio</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/1-col-portfolio.css" rel="stylesheet">
+
+    <!-- Temporary navbar container fix -->
+    <style>
+    .navbar-toggler {
+        z-index: 1;
+    }
+    
+    @media (max-width: 576px) {
+        nav > .container {
+            width: 100%;
+        }
+    }
+	
+	table {
+		text-align: center;
+	}
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-inverse">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="container">
+            <a class="navbar-brand" href="http://atkelman.github.io">Alexander Kelman</a>
+            <div class="collapse navbar-collapse" id="navbarExample">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+					<li class="nav-item">
+                        <a class="nav-link" href="hobby.html">Hobby Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Page Heading -->
+        <h1 class="my-4">Bachelor Degree Project</h1>
+		
+		<h5 class="my-4">Bachelor Degree Project in Computer Science with a Specialization in Computer Game Development. 
+				The project is based on the research of utilizing the Swarm Intelligence algorithms, Ant Colony Optimization 
+				and Particle Swarm Optimization, for pathfinding in games. </h5>
+		
+		<!-- my attemp -->
+		<div class="row">
+			<!-- Table Col -->
+			<div class="col-md-3" style="padding-top:48px">
+				<table style="width:100%" border="1px" >
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor.html">Ant Colony Optimization</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_pso.html">Particle Swarm Optimization</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_astar.html">A*</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_seeker.html">Seeker Behaviour</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_target.html">Target Behaviour</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_grid.html">Grid Generator</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_node.html">Node</a></th></tr>
+				</table>
+			
+			</div>
+			<!-- Code Col -->
+			<div class="col-md-5">
+				<div class="row">
+					<h3 style="padding-left:15px"> Grid Generator</h3>
+					
+
+					<div class="code">
+<span class="Namespace">using</span>&nbsp;UnityEngine;<br />
+<span class="Namespace">using</span>&nbsp;System.Collections;<br />
+<span class="Namespace">using</span>&nbsp;System.Collections.Generic;<br />
+<br />
+<span class="Modifier">public</span>&nbsp;<span class="ReferenceType">class</span>&nbsp;MapGridGenerator&nbsp;:&nbsp;MonoBehaviour<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;GameObject&nbsp;gizmoManager;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;GameObject&nbsp;Tile;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ReferenceType">string</span>&nbsp;txtFile&nbsp;=&nbsp;<span class="String">"Map_Warcraft3_Frostsabre"</span>;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">private</span>&nbsp;<span class="ReferenceType">string</span>&nbsp;txtContents;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;Vector2&nbsp;gridSize&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;Vector2(512,&nbsp;512);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">float</span>&nbsp;nodeRadius&nbsp;=&nbsp;0.5f;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;List&lt;Node&gt;&nbsp;playerPath;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;List&lt;Node&gt;&nbsp;currentPath;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">private</span>&nbsp;Node[,]&nbsp;grid;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">private</span>&nbsp;<span class="ValueType">bool</span>[,]&nbsp;mapData;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">private</span>&nbsp;<span class="ValueType">float</span>&nbsp;nodeDiameter;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">private</span>&nbsp;<span class="ValueType">int</span>&nbsp;gridSizeX,&nbsp;gridSizeY;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">private</span>&nbsp;GameObject[,]&nbsp;tiles;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">void</span>&nbsp;Start()<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TextHandler.initializeNewValuesForHandler();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;playerPath&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;List&lt;Node&gt;();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nodeDiameter&nbsp;=&nbsp;nodeRadius&nbsp;*&nbsp;2;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gridSizeX&nbsp;=&nbsp;Mathf.RoundToInt(gridSize.x&nbsp;/&nbsp;nodeDiameter);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gridSizeY&nbsp;=&nbsp;Mathf.RoundToInt(gridSize.y&nbsp;/&nbsp;nodeDiameter);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ReadMapData();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CreateGrid();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TextHandler.mapName&nbsp;=&nbsp;txtFile;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">void</span>&nbsp;ReadMapData()<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mapData&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;<span class="ValueType">bool</span>[gridSizeX,&nbsp;gridSizeY];<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TextAsset&nbsp;txtAssets&nbsp;=&nbsp;(TextAsset)Resources.Load(txtFile);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;txtContents&nbsp;=&nbsp;txtAssets.text;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ReferenceType">string</span>[]&nbsp;mapDataArray&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;<span class="ReferenceType">string</span>[(<span class="ValueType">int</span>)gridSize.y];<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">for</span>&nbsp;(<span class="ValueType">int</span>&nbsp;y&nbsp;=&nbsp;0;&nbsp;y&nbsp;&lt;&nbsp;mapDataArray.Length;&nbsp;y++)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;startingIndex&nbsp;=&nbsp;Mathf.RoundToInt((gridSize.x&nbsp;+&nbsp;1&nbsp;)&nbsp;*&nbsp;y);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mapDataArray[y]&nbsp;=&nbsp;txtContents.Substring(startingIndex,&nbsp;(<span class="ValueType">int</span>)gridSize.x);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ReferenceType">string</span>&nbsp;entireRow&nbsp;=&nbsp;mapDataArray[y];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">for</span>&nbsp;(<span class="ValueType">int</span>&nbsp;x&nbsp;=&nbsp;0;&nbsp;x&nbsp;&lt;&nbsp;(<span class="ValueType">int</span>)gridSize.x;&nbsp;x++)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(entireRow[x]&nbsp;==&nbsp;'.')<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mapData[x,&nbsp;y]&nbsp;=&nbsp;<span class="Keyword">true</span>;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">else</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mapData[x,&nbsp;y]&nbsp;=&nbsp;<span class="Keyword">false</span>;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">void</span>&nbsp;CreateGrid()<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grid&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;Node[gridSizeX,&nbsp;gridSizeY];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tiles&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;GameObject[gridSizeX,&nbsp;gridSizeY];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vector3&nbsp;worldBottomLeft&nbsp;=&nbsp;transform.position&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Vector3.right&nbsp;*&nbsp;gridSize.x&nbsp;/&nbsp;2&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Vector3.up&nbsp;*&nbsp;gridSize.y&nbsp;/&nbsp;2;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">for</span>(<span class="ValueType">int</span>&nbsp;x&nbsp;=&nbsp;0;&nbsp;x&nbsp;&lt;&nbsp;gridSizeX;&nbsp;x++)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">for</span>(<span class="ValueType">int</span>&nbsp;y&nbsp;=&nbsp;0;&nbsp;y&nbsp;&lt;&nbsp;gridSizeY;&nbsp;y++)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vector3&nbsp;worldPoint&nbsp;=&nbsp;worldBottomLeft&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;Vector3.right&nbsp;*&nbsp;(x&nbsp;*&nbsp;nodeDiameter&nbsp;+&nbsp;nodeRadius)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;Vector3.up&nbsp;*&nbsp;(y&nbsp;*&nbsp;nodeDiameter&nbsp;+&nbsp;nodeRadius);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">bool</span>&nbsp;walkable&nbsp;=&nbsp;mapData[x,&nbsp;y];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grid[x,&nbsp;y]&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;Node(walkable,&nbsp;worldPoint,&nbsp;x,&nbsp;y);<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GameObject&nbsp;instance&nbsp;=&nbsp;(GameObject)Instantiate(Tile,&nbsp;worldPoint,&nbsp;transform.rotation);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;instance.transform.SetParent(transform,&nbsp;<span class="Keyword">true</span>);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;instance.GetComponent&lt;SpriteRenderer&gt;().color&nbsp;=&nbsp;(walkable)&nbsp;?&nbsp;Color.white&nbsp;:&nbsp;Color.red;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tiles[x,&nbsp;y]&nbsp;=&nbsp;instance;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;List&lt;Node&gt;&nbsp;GetNeighbours(Node&nbsp;node)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&lt;Node&gt;&nbsp;neighbours&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;List&lt;Node&gt;();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;Check&nbsp;nodes&nbsp;in&nbsp;3x3&nbsp;grid&nbsp;around&nbsp;node</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">for</span>&nbsp;(<span class="ValueType">int</span>&nbsp;x&nbsp;=&nbsp;-1;&nbsp;x&nbsp;&lt;=&nbsp;1;&nbsp;x++)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">for</span>&nbsp;(<span class="ValueType">int</span>&nbsp;y&nbsp;=&nbsp;-1;&nbsp;y&nbsp;&lt;=&nbsp;1;&nbsp;y++)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;Skip&nbsp;current&nbsp;node</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(x&nbsp;==&nbsp;0&nbsp;&amp;&amp;&nbsp;y&nbsp;==&nbsp;0)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">continue</span>;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;Check&nbsp;if&nbsp;inside&nbsp;grid</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;checkX&nbsp;=&nbsp;node.gridX&nbsp;+&nbsp;x;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;checkY&nbsp;=&nbsp;node.gridY&nbsp;+&nbsp;y;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(checkX&nbsp;&gt;=&nbsp;0&nbsp;&amp;&amp;&nbsp;checkX&nbsp;&lt;&nbsp;gridSizeX&nbsp;&amp;&amp;&nbsp;checkY&nbsp;&gt;=&nbsp;0&nbsp;&amp;&amp;&nbsp;checkY&nbsp;&lt;&nbsp;gridSizeY)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;neighbours.Add(grid[checkX,&nbsp;checkY]);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>&nbsp;neighbours;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;List&lt;Node&gt;&nbsp;GetWalkableNeighbours(<span class="ValueType">int</span>[]&nbsp;xy)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&lt;Node&gt;&nbsp;neighbours&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;List&lt;Node&gt;();<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">for</span>(<span class="ValueType">int</span>&nbsp;x&nbsp;=&nbsp;-1;&nbsp;x&nbsp;&lt;=&nbsp;1;&nbsp;x++)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">for</span>(<span class="ValueType">int</span>&nbsp;y&nbsp;=&nbsp;-1;&nbsp;y&nbsp;&lt;=&nbsp;1;&nbsp;y++)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(x&nbsp;==&nbsp;0&nbsp;&amp;&amp;&nbsp;y&nbsp;==&nbsp;0)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">continue</span>;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;checkX&nbsp;=&nbsp;xy[0]&nbsp;+&nbsp;x;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;checkY&nbsp;=&nbsp;xy[1]&nbsp;+&nbsp;y;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(checkX&nbsp;&gt;=&nbsp;0&nbsp;&amp;&amp;&nbsp;checkX&nbsp;&lt;&nbsp;gridSizeX&nbsp;&amp;&amp;&nbsp;checkY&nbsp;&gt;=&nbsp;0&nbsp;&amp;&amp;&nbsp;checkY&nbsp;&lt;&nbsp;gridSizeY&nbsp;)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(grid[checkX,&nbsp;checkY].walkable)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;neighbours.Add(grid[checkX,&nbsp;checkY]);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(neighbours.Count&nbsp;==&nbsp;0)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(<span class="String">"ERROR&nbsp;-&nbsp;random&nbsp;walkable&nbsp;neighbour&nbsp;count&nbsp;0&nbsp;--&nbsp;POSITION&nbsp;"</span>&nbsp;+&nbsp;xy[0]&nbsp;+&nbsp;<span class="String">"&nbsp;"</span>&nbsp;+&nbsp;xy[1]);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>&nbsp;neighbours;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;Node&nbsp;NodeFromWorldPoint(Vector3&nbsp;pWorldPosition)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">float</span>&nbsp;percentX&nbsp;=&nbsp;(pWorldPosition.x&nbsp;+&nbsp;gridSize.x&nbsp;/&nbsp;2)&nbsp;/&nbsp;gridSize.x;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">float</span>&nbsp;percentY&nbsp;=&nbsp;(pWorldPosition.y&nbsp;+&nbsp;gridSize.y&nbsp;/&nbsp;2)&nbsp;/&nbsp;gridSize.y;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;percentX&nbsp;=&nbsp;Mathf.Clamp01(percentX);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;percentY&nbsp;=&nbsp;Mathf.Clamp01(percentY);<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;x&nbsp;=&nbsp;Mathf.RoundToInt((gridSizeX&nbsp;-&nbsp;1)&nbsp;*&nbsp;percentX);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;y&nbsp;=&nbsp;Mathf.RoundToInt((gridSizeY&nbsp;-&nbsp;1)&nbsp;*&nbsp;percentY);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>&nbsp;grid[x,&nbsp;y];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">void</span>&nbsp;OnComplete()<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(playerPath&nbsp;!=&nbsp;<span class="Keyword">null</span>)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">foreach</span>&nbsp;(Node&nbsp;n&nbsp;<span class="Statement">in</span>&nbsp;playerPath)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tiles[n.gridX,&nbsp;n.gridY].GetComponent&lt;SpriteRenderer&gt;().color&nbsp;=&nbsp;Color.green;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tiles[n.gridX,&nbsp;n.gridY].transform.localScale&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;Vector3(7,&nbsp;7,&nbsp;1);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">void</span>&nbsp;IllustratePath(List&lt;Node&gt;&nbsp;path,&nbsp;Color&nbsp;colour)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="XmlComment">////&nbsp;Reset&nbsp;old&nbsp;path</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//if(currentPath&nbsp;!=&nbsp;null)</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//{</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;foreach(Node&nbsp;n&nbsp;in&nbsp;currentPath)</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;{</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(tiles[n.gridX,&nbsp;n.gridY].GetComponent&lt;SpriteRenderer&gt;().color&nbsp;==&nbsp;Color.white)</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tiles[n.gridX,&nbsp;n.gridY].transform.localScale&nbsp;=&nbsp;new&nbsp;Vector3(5,&nbsp;5,&nbsp;1);</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;}</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//}</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>(path&nbsp;!=&nbsp;<span class="Keyword">null</span>)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">foreach</span>&nbsp;(Node&nbsp;n&nbsp;<span class="Statement">in</span>&nbsp;path)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(tiles[n.gridX,&nbsp;n.gridY].GetComponent&lt;SpriteRenderer&gt;().color&nbsp;==&nbsp;Color.white)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tiles[n.gridX,&nbsp;n.gridY].GetComponent&lt;SpriteRenderer&gt;().color&nbsp;=&nbsp;colour;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">else</span>&nbsp;<span class="Statement">if</span>(tiles[n.gridX,&nbsp;n.gridY].GetComponent&lt;SpriteRenderer&gt;().color&nbsp;==&nbsp;colour)&nbsp;{&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;do&nbsp;nothing</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">else</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tiles[n.gridX,&nbsp;n.gridY].GetComponent&lt;SpriteRenderer&gt;().color&nbsp;=&nbsp;Color.yellow;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tiles[n.gridX,&nbsp;n.gridY].transform.localScale&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;Vector3(7,&nbsp;7,&nbsp;1);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;currentPath&nbsp;=&nbsp;path;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;Gizmo&nbsp;functions</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">void</span>&nbsp;ActivateGizmo(List&lt;Node&gt;&nbsp;path)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gizmoManager.GetComponent&lt;GizmoDrawer&gt;().SetValues(gridSizeX,&nbsp;gridSizeY,&nbsp;grid,&nbsp;path,&nbsp;nodeDiameter);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gizmoManager.SetActive(<span class="Keyword">true</span>);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;ACO&nbsp;functions</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;Node&nbsp;GetRandomNeighbour(Node&nbsp;node)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Node&nbsp;randomNeighbour&nbsp;=&nbsp;<span class="Keyword">null</span>;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">while</span>&nbsp;(randomNeighbour&nbsp;==&nbsp;<span class="Keyword">null</span>)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;randX&nbsp;=&nbsp;Random.Range(-1,&nbsp;1);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;randY&nbsp;=&nbsp;Random.Range(-1,&nbsp;1);<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(randX&nbsp;==&nbsp;0&nbsp;&amp;&amp;&nbsp;randY&nbsp;==&nbsp;0)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">continue</span>;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;checkX&nbsp;=&nbsp;node.gridX&nbsp;+&nbsp;randX;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;checkY&nbsp;=&nbsp;node.gridY&nbsp;+&nbsp;randY;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(checkX&nbsp;&gt;=&nbsp;0&nbsp;&amp;&amp;&nbsp;checkX&nbsp;&lt;&nbsp;gridSizeX&nbsp;&amp;&amp;&nbsp;checkY&nbsp;&gt;=&nbsp;0&nbsp;&amp;&amp;&nbsp;checkY&nbsp;&lt;&nbsp;gridSizeY)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>(grid[checkX,&nbsp;checkY].walkable)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;randomNeighbour&nbsp;=&nbsp;grid[checkX,&nbsp;checkY];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>&nbsp;randomNeighbour;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;Node&nbsp;GetRandomNeighbour(<span class="ValueType">int</span>[]&nbsp;xy)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>&nbsp;<span class="Keyword">null</span>;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//Node&nbsp;randomNeighbour&nbsp;=&nbsp;null;</span><br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//while(true)</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//{</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;randX&nbsp;=&nbsp;Random.Range(-1,&nbsp;2);</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;randY&nbsp;=&nbsp;Random.Range(-1,&nbsp;2);</span><br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(randX&nbsp;==&nbsp;0&nbsp;&amp;&amp;&nbsp;randY&nbsp;==&nbsp;0)</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue;</span><br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;checkX&nbsp;=&nbsp;xy[0]&nbsp;+&nbsp;randX;</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;checkY&nbsp;=&nbsp;xy[1]&nbsp;+&nbsp;randY;</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(checkX&nbsp;&gt;=&nbsp;0&nbsp;&amp;&amp;&nbsp;checkX&nbsp;&lt;&nbsp;gridSizeX&nbsp;&amp;&amp;&nbsp;checkY&nbsp;&gt;=&nbsp;0&nbsp;&amp;&amp;&nbsp;checkY&nbsp;&lt;&nbsp;gridSizeY)</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;{</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(grid[checkX,&nbsp;checkY].walkable)</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;randomNeighbour&nbsp;=&nbsp;grid[checkX,&nbsp;checkY];</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span><br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;&nbsp;&nbsp;&nbsp;}</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//}</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//return&nbsp;randomNeighbour;</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;PSO&nbsp;functions</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">bool</span>&nbsp;IsWalkable(<span class="ValueType">int</span>&nbsp;x,&nbsp;<span class="ValueType">int</span>&nbsp;y)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>(x&nbsp;&gt;=&nbsp;0&nbsp;&amp;&amp;&nbsp;x&nbsp;&lt;&nbsp;gridSizeX&nbsp;&amp;&amp;&nbsp;y&nbsp;&gt;=&nbsp;0&nbsp;&amp;&amp;&nbsp;y&nbsp;&lt;&nbsp;gridSizeY)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>(grid[x,y].walkable)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>&nbsp;<span class="Keyword">true</span>;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//print("not&nbsp;walkable&nbsp;"&nbsp;+&nbsp;x&nbsp;+&nbsp;"&nbsp;"&nbsp;+&nbsp;y);</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>&nbsp;<span class="Keyword">false</span>;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="InlineComment">//&nbsp;PSO&nbsp;LAZY&nbsp;functions</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;Node&nbsp;LazyUpdatePSO(Node&nbsp;n,&nbsp;<span class="ValueType">int</span>&nbsp;velX,&nbsp;<span class="ValueType">int</span>&nbsp;velY)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;checkX&nbsp;=&nbsp;n.gridX&nbsp;+&nbsp;velX;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;checkY&nbsp;=&nbsp;n.gridY&nbsp;+&nbsp;velY;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(checkX&nbsp;&gt;=&nbsp;0&nbsp;&amp;&amp;&nbsp;checkX&nbsp;&lt;&nbsp;gridSizeX&nbsp;&amp;&amp;&nbsp;checkY&nbsp;&gt;=&nbsp;0&nbsp;&amp;&amp;&nbsp;checkY&nbsp;&lt;&nbsp;gridSizeY)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>&nbsp;grid[checkX,&nbsp;checkY];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">else</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(<span class="String">"Lazy&nbsp;update&nbsp;out&nbsp;of&nbsp;range"</span>);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>&nbsp;n;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;Node&nbsp;LazyMove(<span class="ValueType">int</span>&nbsp;gridX,&nbsp;<span class="ValueType">int</span>&nbsp;gridY)&nbsp;<span class="InlineComment">//&nbsp;GetNodeFromGridPosition</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;x&nbsp;=&nbsp;gridX;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;y&nbsp;=&nbsp;gridY;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(gridX&nbsp;&gt;&nbsp;gridSizeX)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;gridSizeX&nbsp;-&nbsp;1;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">else</span>&nbsp;<span class="Statement">if</span>&nbsp;(gridX&nbsp;&lt;&nbsp;0)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;0;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(gridY&nbsp;&gt;&nbsp;gridSizeY)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;=&nbsp;gridSizeY&nbsp;-&nbsp;1;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">else</span>&nbsp;<span class="Statement">if</span>&nbsp;(gridY&nbsp;&lt;&nbsp;0)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;=&nbsp;0;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>&nbsp;grid[x,&nbsp;y];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;Node&nbsp;GetNodeFromGridCoordinates(<span class="ValueType">int</span>[]&nbsp;xy)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;x&nbsp;=&nbsp;xy[0];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ValueType">int</span>&nbsp;y&nbsp;=&nbsp;xy[1];<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(xy[0]&nbsp;&gt;&nbsp;gridSizeX)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;gridSizeX&nbsp;-&nbsp;1;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">else</span>&nbsp;<span class="Statement">if</span>&nbsp;(xy[0]&nbsp;&lt;&nbsp;0)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;0;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">if</span>&nbsp;(xy[1]&nbsp;&gt;&nbsp;gridSizeY)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;=&nbsp;gridSizeY&nbsp;-&nbsp;1;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">else</span>&nbsp;<span class="Statement">if</span>&nbsp;(xy[1]&nbsp;&lt;&nbsp;0)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;=&nbsp;0;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Statement">return</span>&nbsp;grid[x,&nbsp;y];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+}
+</div>
+					
+				</div>
+			</div>
+		</div>
+	
+        <hr>
+
+        <hr>
+
+    </div>
+    <!-- /.container -->
+
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/tether/tether.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

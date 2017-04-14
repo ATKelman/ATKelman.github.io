@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Alexander Kelman Portfolio</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/1-col-portfolio.css" rel="stylesheet">
+
+    <!-- Temporary navbar container fix -->
+    <style>
+    .navbar-toggler {
+        z-index: 1;
+    }
+    
+    @media (max-width: 576px) {
+        nav > .container {
+            width: 100%;
+        }
+    }
+	
+	table {
+		text-align: center;
+	}
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-inverse">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="container">
+            <a class="navbar-brand" href="http://atkelman.github.io">Alexander Kelman</a>
+            <div class="collapse navbar-collapse" id="navbarExample">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+					<li class="nav-item">
+                        <a class="nav-link" href="hobby.html">Hobby Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Page Heading -->
+        <h1 class="my-4">Bachelor Degree Project</h1>
+		
+		<h5 class="my-4">Bachelor Degree Project in Computer Science with a Specialization in Computer Game Development. 
+				The project is based on the research of utilizing the Swarm Intelligence algorithms, Ant Colony Optimization 
+				and Particle Swarm Optimization, for pathfinding in games. </h5>
+		
+		<!-- my attemp -->
+		<div class="row">
+			<!-- Table Col -->
+			<div class="col-md-3" style="padding-top:48px">
+				<table style="width:100%" border="1px" >
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor.html">Ant Colony Optimization</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_pso.html">Particle Swarm Optimization</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_astar.html">A*</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_seeker.html">Seeker Behaviour</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_target.html">Target Behaviour</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_grid.html">Grid Generator</a></th></tr>
+					<tr><th style="text-align:center; padding:15px"><a class="nav-link" href="project_bachelor_node.html">Node</a></th></tr>
+				</table>
+			
+			</div>
+			<!-- Code Col -->
+			<div class="col-md-5">
+				<div class="row">
+					<h3 style="padding-left:15px"> Node</h3>
+					
+
+					<div class="code">
+<span class="Namespace">using</span>&nbsp;UnityEngine;<br />
+<span class="Namespace">using</span>&nbsp;System.Collections;<br />
+<br />
+<span class="Modifier">public</span>&nbsp;<span class="ReferenceType">class</span>&nbsp;Node&nbsp;<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">bool</span>&nbsp;walkable;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;Vector3&nbsp;worldPosition;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">int</span>&nbsp;gridX;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">int</span>&nbsp;gridY;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;Node&nbsp;parent;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">int</span>&nbsp;gCost;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">int</span>&nbsp;hCost;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">float</span>&nbsp;pheromone;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">float</span>&nbsp;initialPhermone;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">float</span>&nbsp;antValue;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">float</span>&nbsp;attractiveness;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">int</span>[]&nbsp;gridPosition;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;Node(<span class="ValueType">bool</span>&nbsp;pWalkable,&nbsp;Vector3&nbsp;pWorldPos,&nbsp;<span class="ValueType">int</span>&nbsp;pGridX,&nbsp;<span class="ValueType">int</span>&nbsp;pGridY)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;walkable&nbsp;=&nbsp;pWalkable;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;worldPosition&nbsp;=&nbsp;pWorldPos;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gridX&nbsp;=&nbsp;pGridX;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gridY&nbsp;=&nbsp;pGridY;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gridPosition&nbsp;=&nbsp;<span class="Keyword">new</span>&nbsp;<span class="ValueType">int</span>[2];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gridPosition[0]&nbsp;=&nbsp;pGridX;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gridPosition[1]&nbsp;=&nbsp;pGridY;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;attractiveness&nbsp;=&nbsp;0;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pheromone&nbsp;=&nbsp;0.25f;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initialPhermone&nbsp;=&nbsp;0.20f;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="Modifier">public</span>&nbsp;<span class="ValueType">int</span>&nbsp;fCost<br />
+&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get&nbsp;{&nbsp;<span class="Statement">return</span>&nbsp;gCost&nbsp;+&nbsp;hCost;&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+<br />
+}
+</div>
+					
+				</div>
+			</div>
+		</div>
+	
+        <hr>
+
+        <hr>
+
+    </div>
+    <!-- /.container -->
+
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/tether/tether.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
